@@ -2,3 +2,4 @@
 guilds/*
 venv
 venv/
+__pycache__
