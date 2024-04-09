@@ -72,6 +72,11 @@ async def _check_counter(ctx):
         return
     counter = guild_sequences[ctx.guild.id][str(ctx.channel.id)]
 
+    try:
+        value = int(re.search("[0-9]*", ctx.content).group(0))
+    except Exception:
+        return
+
     if ctx.author.id == counter["last_user_id"]:
         await reset(ctx.guild.id,str(ctx.channel.id))
         await ctx.reply(f"Ruined it! Same person can't go twice in a row! Start again at {(await sequences[counter['sequence']](0))}")
@@ -81,10 +86,13 @@ async def _check_counter(ctx):
     
     print(expected_value)
 
-    value = int(re.search("[0-9]*", ctx.content).group(0))
 
     if value == expected_value:
-        await ctx.add_reaction("✅")
+        if counter["current_indice"] > counter["highest_indice"]:
+            await ctx.add_reaction("☑")
+            counter["highest_indice"] = counter["current_indice"]
+        else:
+            await ctx.add_reaction("✅")
         counter["current_indice"] += 1
         counter["last_user_id"]=ctx.author.id
     else:

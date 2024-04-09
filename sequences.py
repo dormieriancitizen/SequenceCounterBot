@@ -13,6 +13,10 @@ async def fibonacci(n):
         second = int(fibfile.readline())
         index = int(fibfile.readline())
 
+        if n < index:
+            fibonacci(-1)
+            fibonacci(n)
+
         if n == 0:
             return 0
         else:
