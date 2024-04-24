@@ -77,7 +77,7 @@ async def _check_counter(ctx):
     except Exception:
         return
 
-    if ctx.author.id == counter["last_user_id"]:
+    if ctx.author.id == counter["last_user_id"] and not str(ctx.guild.id) == os.getenv("TEST_SERVER"):
         await reset(ctx.guild.id,str(ctx.channel.id))
         await ctx.reply(f"Ruined it! Same person can't go twice in a row! Start again at {(await sequences[counter['sequence']](0))}")
         return
