@@ -1,0 +1,10 @@
+name: sequencecounterbot
+services:
+    sequencecounterbot:
+        container_name: sequencecounterbot
+        build: .
+        restart: unless-stopped
+        env_file:
+          - .env
+        volumes:
+          - ./guilds:/app/guilds
